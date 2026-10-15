@@ -1,0 +1,24 @@
+# Builds e binários
+build/
+*.o
+*.a
+*.so
+
+# Dados brutos e saídas volumosas do IQ-TREE
+data/raw/
+results/raw/
+*.ckp.gz
+*.mldist
+*.bionj
+*.splits.nex
+*.log
+
+# Ambientes locais
+.venv/
+env/local/
+.conda/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.swp
