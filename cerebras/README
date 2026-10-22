@@ -2,7 +2,7 @@
 
 > 📽️ **[Abrir a apresentação no Google Slides](https://docs.google.com/presentation/d/1vHQtJ6lO5HGWStWyTaQkpKTts6UJy6HmRdGkFc4zOX8/edit)**
 
-A Cerebras, com seu chip WSE-3, é a arquitetura estudada. Abaixo, cada ponto do desafio é respondido com a explicação sobre a Cerebras.
+Trabalho do Grupo 02 para a disciplina **Arquiteturas para Desempenho** (CESAR School). A Cerebras, com seu chip WSE-3, é a arquitetura estudada. Abaixo, cada ponto do desafio é respondido com a explicação sobre a Cerebras.
 
 ---
 
@@ -121,6 +121,40 @@ Um stencil atualiza cada ponto de uma grade a partir de seus vizinhos, o que apa
 3. **Benchmarks do fabricante e custo elevado:** os resultados vêm da própria empresa, e o consumo é alto.
 
 **Conclusão:** o WSE compensa quando o problema cabe na memória do chip e tem estrutura de malha ou de vizinhança. Fora desse caso, a generalidade de CPUs e GPUs ainda é mais vantajosa.
+
+---
+
+## Metodologia de pesquisa
+
+As informações foram levantadas por buscas na web e pela leitura direta das fontes. Buscas feitas (em inglês):
+
+1. `arXiv 2405.07898 molecular dynamics Cerebras wafer-scale Santos`
+2. `arXiv 2411.10532 molecular dynamics EAM Cerebras Wafer Scale Engine`
+3. `Cerebras press release May 15 2024 Sandia Lawrence Livermore Los Alamos molecular dynamics`
+4. `Hot Chips 34 Cerebras WSE-2 presentation 2022`
+5. `Cerebras WSE-3 technical specifications 900,000 cores 44 GB SRAM 21 PB/s`
+6. `Cerebras Hot Chips 31 2019 wafer scale engine 1.2 trillion transistors 400,000 cores`
+7. `Cerebras announces third generation wafer-scale engine WSE-3 5nm 4 trillion transistors March 2024 press release`
+8. `Cerebras WSE-3 21 PB/s memory bandwidth 215 PB/s fabric bandwidth`
+
+Buscas em bases acadêmicas (arXiv, IEEE Xplore e ACM Digital Library), em inglês:
+
+9. `Cerebras wafer-scale engine architecture dataflow sparse computation`
+10. `wafer-scale engine high performance computing scientific simulation evaluation`
+11. `Cerebras WSE CSL programming model stencil molecular dynamics`
+12. `Cerebras WSE-2 WSE-3 wafer-scale vs GPU benchmark comparison`
+
+Trabalhos acadêmicos encontrados nessas buscas que complementam o estudo (os de referência foram lidos; os demais, apenas identificados pelo título):
+
+- *Cerebras Architecture Deep Dive: First Look Inside the Hardware/Software Co-Design for Deep Learning*. IEEE Micro, 2023. https://dl.acm.org/doi/abs/10.1109/MM.2023.3256384 (lido: origem das afirmações sobre a ISA)
+- *A Comparison of the Cerebras Wafer-Scale Integration Technology with Nvidia GPU-based Systems for Artificial Intelligence*. arXiv:2503.11698. https://arxiv.org/abs/2503.11698 (identificado)
+- *Benchmarking the Cerebras Wafer Scale Engine-2 Architecture*. ACM, 2025. https://dl.acm.org/doi/10.1145/3731599.3767438 (identificado)
+- *Benchmarking the Performance of Large Language Models on the Cerebras Wafer Scale Engine*. arXiv:2409.00287. https://arxiv.org/abs/2409.00287 (identificado)
+- *Record Acceleration of the Two-Dimensional Ising Model Using High-Performance Wafer Scale Engine*. arXiv:2404.16990. https://arxiv.org/abs/2404.16990 (identificado)
+- *SPADA: A Spatial Dataflow Architecture Programming Language*. arXiv:2511.09447. https://arxiv.org/abs/2511.09447 (identificado)
+- *Massively scalable stencil algorithm*. Jacquelin et al. (Cerebras Systems). arXiv:2204.03775. https://arxiv.org/abs/2204.03775 (identificado)
+
+Além das buscas, foram lidos diretamente os artigos (arXiv e *J. Chem. Phys.*), os slides do Hot Chips 2024, as notas de imprensa e os blogs da Cerebras, e o white paper do SDK. Quando uma afirmação não pôde ser confirmada na fonte primária, isso foi registrado no texto.
 
 ---
 
