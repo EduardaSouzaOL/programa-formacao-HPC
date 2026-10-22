@@ -1,0 +1,133 @@
+# Cerebras: o que existe por trás do código que executamos?
+
+> 📽️ **[Abrir a apresentação no Google Slides](https://docs.google.com/presentation/d/1vHQtJ6lO5HGWStWyTaQkpKTts6UJy6HmRdGkFc4zOX8/edit)**
+
+A Cerebras, com seu chip WSE-3, é a arquitetura estudada. Abaixo, cada ponto do desafio é respondido com a explicação sobre a Cerebras.
+
+---
+
+## 1. Arquitetura
+
+### Qual é sua ISA?
+
+A Cerebras não publica uma ISA comparável ao x86 ou ao ARM. O que se conhece são as categorias de instrução: aritméticas, lógicas, de acesso à memória, de comparação e de desvio, com instruções de tensor por cima. Os programadores não escrevem essas instruções diretamente; escrevem em uma linguagem de alto nível própria, a CSL, que gera o código de cada núcleo.
+
+Algumas características da ISA:
+
+- **Tensores são operandos de primeira classe:** uma instrução pode operar sobre um array inteiro da memória, sem laços explícitos.
+- **Comunicação faz parte da instrução:** enviar dados a um núcleo vizinho é quase tão rápido quanto uma operação aritmética.
+- **Esparsidade no hardware:** zeros não são enviados, e o cálculo só acontece quando há dados úteis.
+- **Controle e tensor juntos:** há instruções de controle comuns, e sobre elas suporte a operações de tensor.
+
+### Organização do processamento
+
+O WSE-3 é um único chip do tamanho de um wafer, com cerca de 900 mil núcleos organizados em uma malha. Cada núcleo tem uma unidade de cálculo, um roteador que o liga aos quatro vizinhos diretos e uma pequena memória local. Não há cache: quem decide onde cada dado fica é o programador.
+
+### Hierarquia de memória
+
+Em CPUs e GPUs, o dado passa por vários níveis de cache até chegar ao processador. No WSE, a hierarquia é mais curta: o núcleo usa a própria memória local e, quando precisa, pega dados dos vizinhos pela malha.
+
+O ganho é uma banda de memória muito alta, de 21 PB/s. O custo é a capacidade total de 44 GB.
+
+### Paralelismo de execução
+
+O paralelismo é espacial: centenas de milhares de núcleos executam ao mesmo tempo, cada um com seus dados. Dentro de cada núcleo, a execução é guiada por eventos, como a chegada de dados vindos de um vizinho.
+
+### Vetorização
+
+A vetorização clássica, como as instruções AVX do x86, não é o eixo do WSE. Operações sobre arrays inteiros são feitas por descrições de dados que percorrem a memória com uma única instrução. O núcleo é otimizado para precisões reduzidas, como fp16 e bf16.
+
+---
+
+## 2. Programação
+
+### Compiladores e linguagens
+
+- **CSL:** linguagem de estilo C, de baixo nível, que descreve o código de cada núcleo e as rotas de comunicação entre eles.
+- **SDK e host:** um programa em Python, no computador host, envia os dados ao chip, dispara o cálculo e recebe o resultado.
+- **Compiladores de alto nível:** há um pipeline baseado em MLIR para stencils, com desempenho próximo ao código escrito à mão, segundo os autores.
+
+### Bibliotecas e frameworks
+
+Para IA, frameworks como o PyTorch já estão integrados à pilha de software, e bibliotecas prontas reduzem a necessidade de escrever CSL. Para HPC, ainda é comum escrever o código manualmente.
+
+### Ferramentas de profiling
+
+O host permite medir a execução do programa. A ferramenta específica de profiling não foi confirmada, por isso não é citada nos slides.
+
+### Extensões específicas
+
+O modelo tem conceitos próprios: mensagens que carregam um canal virtual de comunicação, descritores de estrutura de dados e tarefas disparadas por eventos. Eles não existem em linguagens de uso geral.
+
+---
+
+## 3. Desempenho
+
+### Cores, frequência e SIMD
+
+- **Cores:** cerca de 900 mil núcleos. É o principal mecanismo de desempenho.
+- **Frequência:** modesta, em torno de 875 MHz. O WSE não compete por clock.
+- **SIMD:** existe por meio das descrições de dados, mas não é o fator principal.
+
+### Largura de memória e cache
+
+Não há cache. A largura de memória vem da memória local distribuída, que dá 21 PB/s de banda no total. Cada núcleo acessa a própria memória diretamente, com alta largura de banda.
+
+### Paralelismo e aceleradores
+
+O WSE é um acelerador especializado. Ele tira proveito do paralelismo espacial e da comunicação local, e é mais eficiente em problemas com essa estrutura, como malhas, stencils e álgebra linear.
+
+### Outros mecanismos
+
+- **Dataflow e esparsidade:** o cálculo acontece quando os dados chegam, e zeros não são processados.
+- **Roteamento reconfigurável:** as rotas de comunicação podem mudar durante a execução.
+
+### Resultados publicados
+
+- **Dinâmica molecular:** 1,144 milhão de passos por segundo para 200 mil átomos (Perez et al., *J. Chem. Phys.*, 2025).
+- **Dinâmica molecular vs. Frontier:** 179× mais passos por segundo, para 800 mil átomos (Cerebras, 2024).
+- **Stencil 2D:** até 342× sobre uma implementação adaptada em GPU A100 (Belli & De Sensi, arXiv:2605.07954).
+
+Esses números são medições dos próprios autores ou da Cerebras, e devem ser lidos com cautela.
+
+---
+
+## 4. Aplicação prática
+
+### Dinâmica molecular (HPC)
+
+- **Problema:** simular o movimento de átomos por milhões de passos de tempo. Em supercomputadores, o tempo simulado por dia é curto.
+- **Por que o WSE ajuda:** cada átomo ocupa um núcleo, que conversa só com vizinhos, o que combina com a estrutura do chip.
+- **Resultado:** 179× mais rápido que o Frontier, segundo a Cerebras. A colaboração envolveu Sandia, Lawrence Livermore e Los Alamos.
+
+### Stencils (HPC)
+
+Um stencil atualiza cada ponto de uma grade a partir de seus vizinhos, o que aparece em problemas de calor, ondas e fluidos. No WSE, a grade é dividida entre os núcleos, que trocam as bordas com os vizinhos. Esse padrão combina bem com a malha do chip.
+
+---
+
+## 5. Avaliação crítica
+
+### Vantagens
+
+1. **Memória muito rápida:** banda de 21 PB/s, sem gargalo de memória externa.
+2. **Comunicação local de baixa latência:** cada núcleo fala com seus vizinhos, sem barramentos globais.
+3. **Paralelismo massivo com esparsidade:** centenas de milhares de núcleos, com zeros tratados no hardware.
+
+### Limitações
+
+1. **Capacidade de 44 GB:** modelos e problemas maiores precisam ser divididos entre sistemas.
+2. **Programação de baixo nível:** a CSL exige pensar em rotas de dados e sincronização. A curva de aprendizado é alta e a comunidade é pequena.
+3. **Benchmarks do fabricante e custo elevado:** os resultados vêm da própria empresa, e o consumo é alto.
+
+**Conclusão:** o WSE compensa quando o problema cabe na memória do chip e tem estrutura de malha ou de vizinhança. Fora desse caso, a generalidade de CPUs e GPUs ainda é mais vantajosa.
+
+---
+
+## Referências principais
+
+- Belli, E.; De Sensi, D. "Stencil Computations on Cerebras Wafer-Scale Engine". arXiv:2605.07954. https://arxiv.org/abs/2605.07954
+- Perez, D. et al. "Breaking the mold: Overcoming the time constraints of molecular dynamics on general-purpose hardware". *J. Chem. Phys.* 162, 072501 (2025). https://doi.org/10.1063/5.0249193
+- Santos, K. et al. "Breaking the Molecular Dynamics Timescale Barrier Using a Wafer-Scale System". arXiv:2405.07898. https://arxiv.org/abs/2405.07898
+- Stawinoga, N. et al. "An MLIR Lowering Pipeline for Stencils at Wafer-Scale". arXiv:2601.17754. https://arxiv.org/abs/2601.17754
+- Cerebras. Materiais técnicos e notas de imprensa sobre o WSE-3 e sobre dinâmica molecular (2024).
