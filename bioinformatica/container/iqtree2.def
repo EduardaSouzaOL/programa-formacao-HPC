@@ -1,0 +1,63 @@
+# Definition file do Apptainer: IQ-TREE 2.4.0 (OpenMP)
+# Equivalente ao Dockerfile; mesmas versões fixadas.
+#
+# Construir:   apptainer build iqtree2.sif container/iqtree2.def
+# Executar:    apptainer run --pwd /data -B "$PWD/data":/data iqtree2.sif \
+#                  -s example.phy -m GTR+G -T 2 --seed 1 --prefix teste_inicial
+
+# ---------- Estágio 1: compilação ----------
+Bootstrap: docker
+From: ubuntu:22.04
+Stage: build
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    IQTREE_REF=a00094e0            # commit fixado
+
+    apt-get update -y
+    apt-get install -y --no-install-recommends \
+        build-essential cmake git ca-certificates \
+        libeigen3-dev libboost-dev zlib1g-dev
+    rm -rf /var/lib/apt/lists/*
+
+    mkdir -p /src && cd /src
+    git clone --recursive https://github.com/iqtree/iqtree2.git .
+    git checkout "${IQTREE_REF}"
+    git submodule update --init --recursive
+
+    mkdir build && cd build
+    cmake -DCMAKE_BUILD_TYPE=Release ..
+    make -j2
+
+# ---------- Estágio 2: imagem final ----------
+Bootstrap: docker
+From: ubuntu:22.04
+Stage: final
+
+%files from build
+    /src/build/iqtree2 /usr/local/bin/iqtree2
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update -y
+    apt-get install -y --no-install-recommends libgomp1 zlib1g
+    rm -rf /var/lib/apt/lists/*
+    mkdir -p /data                 # ponto de montagem dos dados
+
+%runscript
+    exec iqtree2 "$@"
+
+%test
+    iqtree2 --version | grep -q "2.4.0"
+
+%labels
+    Software IQ-TREE
+    Version 2.4.0
+    Commit a00094e0
+    Base ubuntu:22.04
+
+%help
+    IQ-TREE 2.4.0 (multicore, OpenMP).
+    Monte os dados com -B "$PWD/data":/data, use --pwd /data (o Apptainer não
+    herda o WORKDIR do Docker) e passe os argumentos do IQ-TREE:
+        apptainer run --pwd /data -B "$PWD/data":/data iqtree2.sif -s example.phy -m GTR+G -T 2 --seed 1

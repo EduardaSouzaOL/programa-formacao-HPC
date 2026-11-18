@@ -30,8 +30,11 @@ Stage: build
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make -j2
 
+# NOTE: this definition file depends on features only available in
+# Singularity 3.2 and later.
 BootStrap: docker
 From: ubuntu:22.04
+Stage: final
 %post
     . /.singularity.d/env/10-docker*.sh
 
@@ -49,3 +52,6 @@ From: ubuntu:22.04
     cd /
     mkdir -p /data
     cd /data
+
+%runscript
+    exec iqtree2 "$@"

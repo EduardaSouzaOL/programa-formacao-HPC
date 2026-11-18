@@ -33,7 +33,8 @@ Stage0 += shell(commands=[
 ])
 
 # ---------- Estágio 1: imagem final ----------
-Stage1 += baseimage(image=base_image)
+# _as='final' vira "Stage: final" no .def (o HPCCM não nomeia o 2º estágio sozinho)
+Stage1 += baseimage(image=base_image, _as='final')
 
 Stage1 += apt_get(ospackages=['libgomp1', 'zlib1g'])
 
@@ -42,3 +43,6 @@ Stage1 += copy(_from='build',
                 dest='/usr/local/bin/iqtree2')
 
 Stage1 += workdir(directory='/data')
+
+# ENTRYPOINT no Docker e %runscript no Apptainer, como no Dockerfile e no iqtree2.def
+Stage1 += runscript(commands=['iqtree2'])

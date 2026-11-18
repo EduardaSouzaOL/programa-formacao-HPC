@@ -1,7 +1,8 @@
 FROM ubuntu:22.04 AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG IQTREE_REF=a00094e0        # commit fixado (o mesmo do README)
+# commit fixado (o mesmo do README)
+ARG IQTREE_REF=a00094e0
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential cmake git ca-certificates \

@@ -1,3 +1,0 @@
-[submodule "bioinformatica/third_party/iqtree2"]
-	path = bioinformatica/third_party/iqtree2
-	url = https://github.com/iqtree/iqtree2.git
