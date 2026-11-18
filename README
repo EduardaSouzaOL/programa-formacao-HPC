@@ -1,0 +1,23 @@
+
+# programa-formacao-HPC
+ 
+Atividades e trabalhos acadêmicos em Computação de Alto Desempenho (HPC) no CESAR School.
+ 
+## Conteúdo
+ 
+### [`bioinformatica/`](bioinformatica/) — Caracterização de desempenho do IQ-TREE 2
+ 
+Estudo de desempenho do [IQ-TREE 2](http://www.iqtree.org/) com OpenMP, parte do Programa de Formação em Computação de Alto Desempenho (CESAR, 2026/2027). O desafio do Encontro Zero pedia escolher um software open source de uma área de aplicação real, documentar sua compilação e execução e containerizá-lo para rodar no cluster com Apptainer.
+ 
+- Dockerfile de dois estágios, `iqtree2.def` do Apptainer e receita HPCCM equivalente, todos fixando o commit `a00094e0` do IQ-TREE 2.4.0 sobre `ubuntu:22.04`
+- Script `scripts/bench.sh` para repetir execuções e resumir log-likelihood, tempo de parede, de CPU e externo
+- Teste inicial de speedup (1 e 2 threads) em `docs/teste-inicial.md`
+- Resultado de referência: log-likelihood `-21155.975` em Docker e Apptainer, com `iqtree2.sif` de 34 MB
+### [`cerebras/`](cerebras/) — Cerebras: o que existe por trás do código que executamos?
+ 
+Trabalho do Grupo 02 para a disciplina **Arquiteturas para Desempenho** (CESAR School). Estuda a arquitetura da Cerebras com o chip WSE-3: ISA, hierarquia de memória, programação em CSL, desempenho e aplicações em dinâmica molecular e stencils. O material inclui o README com o estudo escrito e a apresentação de apoio.
+ 
+## Autoria
+ 
+Maria Eduarda Souza de Oliveira (Duda).
+ 
