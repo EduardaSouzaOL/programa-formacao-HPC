@@ -1,0 +1,16 @@
+# executáveis (gerados por make)
+letters
+mpi-letters-*
+!mpi-letters-*.c
+gerar_texto
+*.exe
+
+# entradas geradas (make entradas) e saídas temporárias
+entradas/
+serial.out
+par.out
+vazio.txt
+tres.txt
+
+# imagem do Apptainer
+*.sif
