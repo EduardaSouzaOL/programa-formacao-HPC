@@ -1,0 +1,30 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+# Receita do contêiner para o desafio MPI (histograma de letras).
+# Parte do hist.def do desafio OpenMP e acrescenta o Open MPI 4.1.6.
+# Uso:
+#   apptainer build mpi.sif mpi.def     # (ou: apptainer build --fakeroot mpi.sif mpi.def)
+#   apptainer exec mpi.sif make all versoes
+#   apptainer exec mpi.sif mpirun -np 4 ./mpi-letters-coletivas < entradas/grande.txt
+
+%post
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        gcc make libc6-dev libgomp1 openmpi-bin libopenmpi-dev
+    rm -rf /var/lib/apt/lists/*
+
+%environment
+    export LC_ALL=C
+    export HWLOC_COMPONENTS=-gl
+
+%test
+    gcc --version | head -1
+    mpirun --version | head -1
+    printf '#include <mpi.h>\nint main(int c, char **v) { MPI_Init(&c, &v); MPI_Finalize(); return 0; }\n' \
+        | mpicc -x c -o /tmp/teste-mpi -
+    echo "OK: mpicc compila e liga com o Open MPI"
+
+%labels
+    Projeto desafio-mpi-histograma-letras
+    Autor   Duda (Maria Eduarda S Oliveira) - CESAR School
