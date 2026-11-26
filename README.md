@@ -17,6 +17,14 @@ Estudo de desempenho do [IQ-TREE 2](http://www.iqtree.org/) com OpenMP, parte do
  
 Trabalho do Grupo 02 para a disciplina **Arquiteturas para Desempenho** (CESAR School). Estuda a arquitetura da Cerebras com o chip WSE-3: ISA, hierarquia de memória, programação em CSL, desempenho e aplicações em dinâmica molecular e stencils. O material inclui o README com o estudo escrito e a apresentação de apoio.
  
+### [`desafio-openmp/`](desafio-openmp/) — Histograma de letras em OpenMP
+
+Desafio da aula de OpenMP: versões paralelas do contador de letras (critical, atomic, local, reduction e uma matriz por thread com e sem padding), conferidas contra a serial e medidas em contêiner. Resultados e análise em `ENTREGA.md`.
+
+### [`desafio-mpi/`](desafio-mpi/) — Histograma de letras em MPI
+
+Desafio da aula de MPI: o mesmo contador com coletivas, só com Send/Recv e com cada processo lendo o seu pedaço do arquivo, mais a receita do contêiner com Open MPI.
+
 ## Autoria
  
 Maria Eduarda Souza de Oliveira (Duda).
