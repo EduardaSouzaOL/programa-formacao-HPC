@@ -1,0 +1,27 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+# Receita do contêiner para o desafio OpenMP (histograma de letras).
+# Monta uma imagem Ubuntu 24.04 com GCC 13, make e a biblioteca do OpenMP.
+# Uso:
+#   apptainer build hist.sif hist.def     # (ou: apptainer build --fakeroot hist.sif hist.def)
+#   apptainer exec hist.sif make
+#   OMP_NUM_THREADS=8 apptainer exec hist.sif ./omp-letters-reduction < entradas/grande.txt
+
+%post
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        gcc make libc6-dev libgomp1
+    rm -rf /var/lib/apt/lists/*
+
+%environment
+    export LC_ALL=C
+
+%test
+    gcc --version | head -1
+    echo '#include <omp.h>' | gcc -fopenmp -x c -fsyntax-only -
+    echo "OK: GCC com OpenMP disponível"
+
+%labels
+    Projeto desafio-openmp-histograma-letras
+    Autor   Duda (Maria Eduarda S Oliveira) - CESAR School
