@@ -1,0 +1,396 @@
+=== 1) CPU ===
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'lscpu'
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           48 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  12
+On-line CPU(s) list:                     0-11
+Vendor ID:                               AuthenticAMD
+Model name:                              AMD Ryzen 5 PRO 4650U with Radeon Graphics
+CPU family:                              23
+Model:                                   96
+Thread(s) per core:                      2
+Core(s) per socket:                      6
+Socket(s):                               1
+Stepping:                                1
+BogoMIPS:                                4191.98
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext perfctr_core ssbd ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 clzero xsaveerptr arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip rdpid
+Virtualization:                          AMD-V
+Hypervisor vendor:                       Microsoft
+Virtualization type:                     full
+L1d cache:                               192 KiB (6 instances)
+L1i cache:                               192 KiB (6 instances)
+L2 cache:                                3 MiB (6 instances)
+L3 cache:                                4 MiB (1 instance)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-11
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Ghostwrite:                Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Old microcode:             Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Mitigation; untrained return thunk; SMT enabled with STIBP protection
+Vulnerability Spec rstack overflow:      Vulnerable: Safe RET, no microcode
+Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Retpolines; IBPB conditional; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Not affected
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Not affected
+[saída: 0]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'nproc'
+12
+[saída: 0]
+
+$ (WSL) lscpu
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           48 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  12
+On-line CPU(s) list:                     0-11
+Vendor ID:                               AuthenticAMD
+Model name:                              AMD Ryzen 5 PRO 4650U with Radeon Graphics
+CPU family:                              23
+Model:                                   96
+Thread(s) per core:                      2
+Core(s) per socket:                      6
+Socket(s):                               1
+Stepping:                                1
+BogoMIPS:                                4191.98
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext perfctr_core ssbd ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 clzero xsaveerptr arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip rdpid
+Virtualization:                          AMD-V
+Hypervisor vendor:                       Microsoft
+Virtualization type:                     full
+L1d cache:                               192 KiB (6 instances)
+L1i cache:                               192 KiB (6 instances)
+L2 cache:                                3 MiB (6 instances)
+L3 cache:                                4 MiB (1 instance)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-11
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Ghostwrite:                Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Old microcode:             Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Mitigation; untrained return thunk; SMT enabled with STIBP protection
+Vulnerability Spec rstack overflow:      Vulnerable: Safe RET, no microcode
+Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Retpolines; IBPB conditional; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Not affected
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Not affected
+[saída: 0]
+
+$ (WSL) nproc
+12
+[saída: 0]
+
+=== 2) Slots ===
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'mpirun -np 6 hostname'
+5f83153720fe
+5f83153720fe
+5f83153720fe
+5f83153720fe
+5f83153720fe
+5f83153720fe
+[saída: 0]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'mpirun -np 7 hostname'
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 7
+slots that were requested by the application:
+
+  hostname
+
+Either request fewer slots for your application, or make more slots
+available for use.
+
+A "slot" is the Open MPI term for an allocatable unit where we can
+launch a process.  The number of slots available are defined by the
+environment in which Open MPI processes are run:
+
+  1. Hostfile, via "slots=N" clauses (N defaults to number of
+     processor cores if not provided)
+  2. The --host command line parameter, via a ":N" suffix on the
+     hostname (N defaults to 1 if not provided)
+  3. Resource manager (e.g., SLURM, PBS/Torque, LSF, etc.)
+  4. If none of a hostfile, the --host command line parameter, or an
+     RM is present, Open MPI defaults to the number of processor cores
+
+In all the above cases, if you want Open MPI to default to the number
+of hardware threads instead of the number of processor cores, use the
+--use-hwthread-cpus option.
+
+Alternatively, you can use the --oversubscribe option to ignore the
+number of available slots when deciding the number of processes to
+launch.
+--------------------------------------------------------------------------
+[saída: 1]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'mpirun --use-hwthread-cpus -np 12 hostname'
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+fe9ae22827be
+[saída: 0]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'mpirun --use-hwthread-cpus -np 13 hostname'
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 13
+slots that were requested by the application:
+
+  hostname
+
+Either request fewer slots for your application, or make more slots
+available for use.
+
+A "slot" is the Open MPI term for an allocatable unit where we can
+launch a process.  The number of slots available are defined by the
+environment in which Open MPI processes are run:
+
+  1. Hostfile, via "slots=N" clauses (N defaults to number of
+     processor cores if not provided)
+  2. The --host command line parameter, via a ":N" suffix on the
+     hostname (N defaults to 1 if not provided)
+  3. Resource manager (e.g., SLURM, PBS/Torque, LSF, etc.)
+  4. If none of a hostfile, the --host command line parameter, or an
+     RM is present, Open MPI defaults to the number of processor cores
+
+In all the above cases, if you want Open MPI to default to the number
+of hardware threads instead of the number of processor cores, use the
+--use-hwthread-cpus option.
+
+Alternatively, you can use the --oversubscribe option to ignore the
+number of available slots when deciding the number of processes to
+launch.
+--------------------------------------------------------------------------
+[saída: 1]
+
+$ (WSL) mpirun -np 6 hostname
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+[saída: 0]
+
+$ (WSL) mpirun -np 7 hostname
+--------------------------------------------------------------------------
+Sorry!  You were supposed to get help about:
+    prte-rmaps-base:alloc-error
+But I couldn't open the help file:
+    /usr/lib/x86_64-linux-gnu/pmix2/share/pmix/help-prte-rmaps-base.txt: No such file or directory
+    /usr/lib/x86_64-linux-gnu/prrte3/share/prte/help-prte-rmaps-base.txt: No such file or directory.
+Sorry!
+--------------------------------------------------------------------------
+ [saída: 1]
+
+$ (WSL) mpirun --use-hwthread-cpus -np 12 hostname
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+MariaEduardaS
+[saída: 0]
+
+$ (WSL) mpirun --use-hwthread-cpus -np 13 hostname
+--------------------------------------------------------------------------
+Sorry!  You were supposed to get help about:
+    prte-rmaps-base:alloc-error
+But I couldn't open the help file:
+    /usr/lib/x86_64-linux-gnu/pmix2/share/pmix/help-prte-rmaps-base.txt: No such file or directory
+    /usr/lib/x86_64-linux-gnu/prrte3/share/prte/help-prte-rmaps-base.txt: No such file or directory.
+Sorry!
+--------------------------------------------------------------------------
+ [saída: 1]
+
+=== 3) Afinidade ===
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'mpirun --report-bindings -np 2 ./mpi-letters-coletivas < entradas/grande.txt > /dev/null'
+[67b890365ffd:00007] MCW rank 0 bound to socket 0[core 0[hwt 0-1]]: [BB/../../../../..]
+[67b890365ffd:00007] MCW rank 1 bound to socket 0[core 1[hwt 0-1]]: [../BB/../../../..]
+distribuir 0.515179 contar 0.521916 combinar 0.000516 total 1.037610
+[saída: 0]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'mpirun --report-bindings -np 4 ./mpi-letters-coletivas < entradas/grande.txt > /dev/null'
+[6a8b795a0cbf:00007] MCW rank 0 is not bound (or bound to all available processors)
+[6a8b795a0cbf:00007] MCW rank 1 is not bound (or bound to all available processors)
+[6a8b795a0cbf:00007] MCW rank 2 is not bound (or bound to all available processors)
+[6a8b795a0cbf:00007] MCW rank 3 is not bound (or bound to all available processors)
+distribuir 0.601018 contar 0.283095 combinar 0.303632 total 0.884177
+[saída: 0]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'mpirun --report-bindings --bind-to core -np 4 ./mpi-letters-coletivas < entradas/grande.txt > /dev/null'
+--------------------------------------------------------------------------
+WARNING: Open MPI tried to bind a process but failed.  This is a
+warning only; your job will continue, though performance may
+be degraded.
+
+  Local host:        e32cfb1db220
+  Application name:  ./mpi-letters-coletivas
+  Error message:     failed to bind memory
+  Location:          ../../../../../../orte/mca/rtc/hwloc/rtc_hwloc.c:447
+
+--------------------------------------------------------------------------
+[e32cfb1db220:00007] MCW rank 0 bound to socket 0[core 0[hwt 0-1]]: [BB/../../../../..]
+[e32cfb1db220:00007] MCW rank 1 bound to socket 0[core 1[hwt 0-1]]: [../BB/../../../..]
+[e32cfb1db220:00007] MCW rank 2 bound to socket 0[core 2[hwt 0-1]]: [../../BB/../../..]
+[e32cfb1db220:00007] MCW rank 3 bound to socket 0[core 3[hwt 0-1]]: [../../../BB/../..]
+[e32cfb1db220:00007] 3 more processes have sent help message help-orte-odls-default.txt / memory not bound
+[e32cfb1db220:00007] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+distribuir 0.612325 contar 0.298347 combinar 0.391943 total 0.910839
+[saída: 0]
+
+=== 4) Tempo (5 repetições) ===
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'for i in 1 2 3 4 5; do mpirun -np 4 ./mpi-letters-coletivas < entradas/grande.txt > /dev/null; done'
+distribuir 0.623984 contar 0.287651 combinar 0.342247 total 0.911735
+distribuir 0.938229 contar 0.382724 combinar 0.332127 total 1.320997
+distribuir 0.565293 contar 0.333473 combinar 0.284556 total 0.898840
+distribuir 0.518356 contar 0.318640 combinar 0.273771 total 0.837163
+distribuir 0.429776 contar 0.288723 combinar 0.225622 total 0.718545
+[saída: 0]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'for i in 1 2 3 4 5; do mpirun --bind-to core -np 4 ./mpi-letters-coletivas < entradas/grande.txt > /dev/null; done'
+--------------------------------------------------------------------------
+WARNING: Open MPI tried to bind a process but failed.  This is a
+warning only; your job will continue, though performance may
+be degraded.
+
+  Local host:        243ff4a9fb25
+  Application name:  ./mpi-letters-coletivas
+  Error message:     failed to bind memory
+  Location:          ../../../../../../orte/mca/rtc/hwloc/rtc_hwloc.c:447
+
+--------------------------------------------------------------------------
+[243ff4a9fb25:00007] 3 more processes have sent help message help-orte-odls-default.txt / memory not bound
+[243ff4a9fb25:00007] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+distribuir 0.580304 contar 0.307700 combinar 0.296854 total 0.888053
+--------------------------------------------------------------------------
+WARNING: Open MPI tried to bind a process but failed.  This is a
+warning only; your job will continue, though performance may
+be degraded.
+
+  Local host:        243ff4a9fb25
+  Application name:  ./mpi-letters-coletivas
+  Error message:     failed to bind memory
+  Location:          ../../../../../../orte/mca/rtc/hwloc/rtc_hwloc.c:447
+
+--------------------------------------------------------------------------
+[243ff4a9fb25:00022] 3 more processes have sent help message help-orte-odls-default.txt / memory not bound
+[243ff4a9fb25:00022] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+distribuir 0.516001 contar 0.338364 combinar 0.279905 total 0.854392
+--------------------------------------------------------------------------
+WARNING: Open MPI tried to bind a process but failed.  This is a
+warning only; your job will continue, though performance may
+be degraded.
+
+  Local host:        243ff4a9fb25
+  Application name:  ./mpi-letters-coletivas
+  Error message:     failed to bind memory
+  Location:          ../../../../../../orte/mca/rtc/hwloc/rtc_hwloc.c:447
+
+--------------------------------------------------------------------------
+[243ff4a9fb25:00037] 3 more processes have sent help message help-orte-odls-default.txt / memory not bound
+[243ff4a9fb25:00037] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+distribuir 0.636706 contar 0.314930 combinar 0.245369 total 0.933621
+--------------------------------------------------------------------------
+WARNING: Open MPI tried to bind a process but failed.  This is a
+warning only; your job will continue, though performance may
+be degraded.
+
+  Local host:        243ff4a9fb25
+  Application name:  ./mpi-letters-coletivas
+  Error message:     failed to bind memory
+  Location:          ../../../../../../orte/mca/rtc/hwloc/rtc_hwloc.c:447
+
+--------------------------------------------------------------------------
+[243ff4a9fb25:00052] 3 more processes have sent help message help-orte-odls-default.txt / memory not bound
+[243ff4a9fb25:00052] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+distribuir 0.402176 contar 0.313455 combinar 0.231758 total 0.715734
+--------------------------------------------------------------------------
+WARNING: Open MPI tried to bind a process but failed.  This is a
+warning only; your job will continue, though performance may
+be degraded.
+
+  Local host:        243ff4a9fb25
+  Application name:  ./mpi-letters-coletivas
+  Error message:     failed to bind memory
+  Location:          ../../../../../../orte/mca/rtc/hwloc/rtc_hwloc.c:447
+
+--------------------------------------------------------------------------
+[243ff4a9fb25:00067] 3 more processes have sent help message help-orte-odls-default.txt / memory not bound
+[243ff4a9fb25:00067] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+distribuir 0.490745 contar 0.297399 combinar 0.242722 total 0.788174
+[saída: 0]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'for i in 1 2 3 4 5; do mpirun --use-hwthread-cpus -np 12 ./mpi-letters-p2p < entradas/grande.txt > /dev/null; done'
+distribuir 1.074479 contar 0.160108 combinar 0.000049 total 1.210341
+distribuir 0.529342 contar 0.160733 combinar 0.000442 total 0.688430
+distribuir 0.581123 contar 0.167922 combinar 0.000114 total 0.739500
+distribuir 0.594977 contar 0.159346 combinar 0.000041 total 0.725080
+distribuir 0.840589 contar 0.233139 combinar 0.000169 total 0.991048
+[saída: 0]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'for i in 1 2 3 4 5; do mpirun --oversubscribe -np 16 ./mpi-letters-p2p < entradas/grande.txt > /dev/null; done'
+distribuir 0.626464 contar 0.188048 combinar 0.001364 total 0.721361
+distribuir 0.564287 contar 0.132469 combinar 0.000124 total 0.659418
+distribuir 0.551464 contar 0.140124 combinar 0.000047 total 0.650501
+distribuir 0.722382 contar 0.250016 combinar 0.009305 total 0.848872
+distribuir 0.563852 contar 0.138587 combinar 0.000330 total 0.675643
+[saída: 0]
+
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'for i in 1 2 3 4 5; do mpirun -np 6 ./mpi-letters-p2p < entradas/grande.txt > /dev/null; done'
+distribuir 0.411960 contar 0.233278 combinar 0.000124 total 0.645316
+distribuir 0.385950 contar 0.232428 combinar 0.000090 total 0.594426
+distribuir 0.410075 contar 0.227390 combinar 0.000134 total 0.614142
+distribuir 0.411294 contar 0.224533 combinar 0.000038 total 0.629772
+distribuir 0.332991 contar 0.233154 combinar 0.000155 total 0.557945
+[saída: 0]
+
+=== 5) Leitura ===
+$ docker run --rm -v "$PWD":/work -w /work mpi bash -c 'for i in 1 2 3; do time cat entradas/grande.txt > /dev/null; done'
+
+real	0m2.251s
+user	0m0.006s
+sys	0m0.252s
+
+real	0m2.004s
+user	0m0.010s
+sys	0m0.214s
+
+real	0m2.004s
+user	0m0.004s
+sys	0m0.211s
+[saída: 0]
+
